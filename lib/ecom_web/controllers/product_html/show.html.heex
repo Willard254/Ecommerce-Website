@@ -1,0 +1,22 @@
+<.header>
+  Product <%= @product.id %>
+  <:subtitle>This is a product record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/products/#{@product}/edit"}>
+      <.button>Edit product</.button>
+    </.link>
+    <.link href={~p"/cart_items?product_id=#{@product.id}"} method="post">
+      <.button>Add to cart</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Picture"><%= Phoenix.HTML.Tag.img_tag(Ecom.FileImage.url({@product.picture, @product}, signed: true)) %></:item>
+  <:item title="Title"><%= @product.title %></:item>
+  <:item title="Description"><%= @product.description %></:item>
+  <:item title="Price"><%= @product.price %></:item>
+  <:item title="Views"><%= @product.views %></:item>
+</.list>
+
+<.back navigate={~p"/products"}>Back to products</.back>
