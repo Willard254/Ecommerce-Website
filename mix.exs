@@ -45,7 +45,7 @@ defmodule Ecom.MixProject do
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
-      {:finch, "~> 0.13"},
+      {:finch, "~> 0.16"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
@@ -53,7 +53,12 @@ defmodule Ecom.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:waffle,  "~> 1.1.5"},
       {:waffle_ecto, "~> 0.0.11"},
-    ]
+      {:httpoison, "~> 1.8"},
+      {:timex, "~> 3.7"},
+      {:poison, "~> 3.1"},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+      {:comeonin, "~> 5.1"},
+      ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

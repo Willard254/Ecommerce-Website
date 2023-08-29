@@ -32,6 +32,7 @@ defmodule EcomWeb.AdminRegistrationLive do
         </.error>
 
         <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:phone_number]} type="string" label="Phone" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>

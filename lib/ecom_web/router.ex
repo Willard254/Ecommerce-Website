@@ -46,7 +46,6 @@ defmodule EcomWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-  
   end
 
   scope "/", EcomWeb do
@@ -61,7 +60,8 @@ defmodule EcomWeb.Router do
 
   # Other scopes may use custom stacks.
   # scope "/api", EcomWeb do
-  #   pipe_through :api
+  #   pipe_through [:api, :require_authenticated_admin]
+
   # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

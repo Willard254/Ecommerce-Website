@@ -4,6 +4,7 @@ defmodule Ecom.Accounts.Admin do
 
   schema "admins" do
     field :email, :string
+    field :phone_number, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
@@ -11,34 +12,18 @@ defmodule Ecom.Accounts.Admin do
     timestamps()
   end
 
-  @doc """
-  A admin changeset for registration.
-
-  It is important to validate the length of both email and password.
-  Otherwise databases may truncate the email without warnings, which
-  could lead to unpredictable or insecure behaviour. Long passwords may
-  also be very expensive to hash for certain algorithms.
-
-  ## Options
-
-    * `:hash_password` - Hashes the password so it can be stored securely
-      in the database and ensures the password field is cleared to prevent
-      leaks in the logs. If password hashing is not needed and clearing the
-      password field is not desired (like when using this changeset for
-      validations on a LiveView form), this option can be set to `false`.
-      Defaults to `true`.
-
-    * `:validate_email` - Validates the uniqueness of the email, in case
-      you don't want to validate the uniqueness of the email (like when
-      using this changeset for validations on a LiveView form before
-      submitting the form), this option can be set to `false`.
-      Defaults to `true`.
-  """
   def registration_changeset(admin, attrs, opts \\ []) do
     admin
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :phone_number])
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+  def changeset(admin, attrs) do
+    admin
+    |> cast(attrs, [:email, :password, :phone_number])
+    |> validate_required([:email, :password])
+    |> unique_constraint(:email)
   end
 
   defp validate_email(changeset, opts) do
@@ -53,10 +38,6 @@ defmodule Ecom.Accounts.Admin do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 12, max: 72)
-    # Examples of additional password validation:
-    # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
-    # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
-    # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
     |> maybe_hash_password(opts)
   end
 

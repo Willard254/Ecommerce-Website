@@ -505,4 +505,62 @@ defmodule Ecom.AccountsTest do
       refute inspect(%Admin{password: "123456"}) =~ "password: \"123456\""
     end
   end
+
+  describe "clients" do
+    alias Ecom.Accounts.Client
+
+    import Ecom.AccountsFixtures
+
+    @invalid_attrs %{username: nil, phone_number: nil, encrypted_password: nil}
+
+    test "list_clients/0 returns all clients" do
+      client = client_fixture()
+      assert Accounts.list_clients() == [client]
+    end
+
+    test "get_client!/1 returns the client with given id" do
+      client = client_fixture()
+      assert Accounts.get_client!(client.id) == client
+    end
+
+    test "create_client/1 with valid data creates a client" do
+      valid_attrs = %{username: "some username", phone_number: "some phone_number", encrypted_password: "some encrypted_password"}
+
+      assert {:ok, %Client{} = client} = Accounts.create_client(valid_attrs)
+      assert client.username == "some username"
+      assert client.phone_number == "some phone_number"
+      assert client.encrypted_password == "some encrypted_password"
+    end
+
+    test "create_client/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_client(@invalid_attrs)
+    end
+
+    test "update_client/2 with valid data updates the client" do
+      client = client_fixture()
+      update_attrs = %{username: "some updated username", phone_number: "some updated phone_number", encrypted_password: "some updated encrypted_password"}
+
+      assert {:ok, %Client{} = client} = Accounts.update_client(client, update_attrs)
+      assert client.username == "some updated username"
+      assert client.phone_number == "some updated phone_number"
+      assert client.encrypted_password == "some updated encrypted_password"
+    end
+
+    test "update_client/2 with invalid data returns error changeset" do
+      client = client_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_client(client, @invalid_attrs)
+      assert client == Accounts.get_client!(client.id)
+    end
+
+    test "delete_client/1 deletes the client" do
+      client = client_fixture()
+      assert {:ok, %Client{}} = Accounts.delete_client(client)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_client!(client.id) end
+    end
+
+    test "change_client/1 returns a client changeset" do
+      client = client_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_client(client)
+    end
+  end
 end

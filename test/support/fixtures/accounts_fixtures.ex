@@ -28,4 +28,25 @@ defmodule Ecom.AccountsFixtures do
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
     token
   end
+
+  @doc """
+  Generate a unique client username.
+  """
+  def unique_client_username, do: "some username#{System.unique_integer([:positive])}"
+
+  @doc """
+  Generate a client.
+  """
+  def client_fixture(attrs \\ %{}) do
+    {:ok, client} =
+      attrs
+      |> Enum.into(%{
+        username: unique_client_username(),
+        phone_number: "some phone_number",
+        encrypted_password: "some encrypted_password"
+      })
+      |> Ecom.Accounts.create_client()
+
+    client
+  end
 end

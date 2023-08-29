@@ -110,6 +110,7 @@ defmodule Ecom.Orders do
   alias Ecom.ShoppingCart
 
   def complete_order(%ShoppingCart.Cart{} = cart) do
+    IO.inspect(cart)
     line_items =
       Enum.map(cart.items, fn item ->
         %{product_id: item.product_id, price: item.product.price, quantity: item.quantity}
