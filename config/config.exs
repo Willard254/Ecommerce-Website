@@ -72,8 +72,8 @@ config :waffle,
 #Configure Mpesa
 config :ecom, Ecom.Mpesa,
   env: "sandbox",
-  consumer_key: "GqmFeZypSrpAWWvzNqhiksrvZP8MQqlx",
-  consumer_secret: "unwm2hCSSMYMGeJm",
-  mpesa_short_code: "174379",
-  mpesa_passkey: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
-  mpesa_callback_url: "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+  consumer_key: "",
+  consumer_secret: "",
+  mpesa_short_code: "",
+  mpesa_passkey: "",
+  mpesa_callback_url: ""

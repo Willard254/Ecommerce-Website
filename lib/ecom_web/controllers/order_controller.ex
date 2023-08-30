@@ -12,7 +12,7 @@ defmodule EcomWeb.OrderController do
 
         Task.start(fn -> 
         
-         with {:ok, access_token} <- Mpesa.authorize(),{:ok, stk_response}<- Mpesa.request(access_token, to_string(order.total_price |> Decimal.round), conn.assigns.current_admin.phone_number)|> IO.inspect() do
+         with {:ok, access_token} <- Mpesa.authorize(),{:ok, _stk_response}<- Mpesa.request(access_token, to_string(order.total_price |> Decimal.round), conn.assigns.current_admin.phone_number)|> IO.inspect() do
           :ok
          else
           _ ->
